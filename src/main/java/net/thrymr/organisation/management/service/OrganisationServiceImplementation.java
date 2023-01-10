@@ -59,16 +59,17 @@ public class OrganisationServiceImplementation implements OrganisationService {
     }
 
 
-    @Override
-    public boolean deleteById(Long id) {
-        try {
-            organisationRepository.deleteById(id);
-            return true;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return false;
-        }
-    }
+//     @Override
+//     public boolean deleteById(Long id) {
+//         try {
+//             organisationRepository.deleteById(id);
+//             return true;
+//         } catch (Exception exception) {
+//             exception.printStackTrace();
+//             return false;
+//         }
+    
+//     }
 
     @Override
     public List<OrganisationDto> getAll() {
@@ -202,7 +203,29 @@ public class OrganisationServiceImplementation implements OrganisationService {
 //    }
 //
     public List<OrganisationDto> entityToDto(List<Organisation> organisations) {
-
+​
+61
+​
+62
+//     @Override
+63
+//     public boolean deleteById(Long id) {
+64
+//         try {
+65
+//             organisationRepository.deleteById(id);
+66
+//             return true;
+67
+//         } catch (Exception exception) {
+68
+//             exception.printStackTrace();
+69
+//             return false;
+70
+//         }
+71
+//     }
         List<OrganisationDto> organisationDtos1 = new ArrayList<>();
         for (Organisation organisation : organisations) {
 
