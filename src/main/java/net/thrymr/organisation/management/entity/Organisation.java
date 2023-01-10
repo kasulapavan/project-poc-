@@ -38,4 +38,7 @@ public class Organisation {
     private List<Department> departmentList;
     @Column(columnDefinition = "TEXT")
     private String search;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private FileUpload fileUpload;
 }

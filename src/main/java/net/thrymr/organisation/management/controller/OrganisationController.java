@@ -4,10 +4,13 @@ import net.thrymr.organisation.management.dto.*;
 
 import net.thrymr.organisation.management.service.OrderBy;
 import net.thrymr.organisation.management.service.serviceInterface.DepartmentService;
+import net.thrymr.organisation.management.service.serviceInterface.FileService;
 import net.thrymr.organisation.management.service.serviceInterface.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 @CrossOrigin("*")
@@ -20,6 +23,9 @@ public class OrganisationController {
 
     @Autowired
     public DepartmentService departmentService;
+
+    @Autowired
+    public FileService fileService;
     @PostMapping(path = "/save")
     public OrganisationDto save(@RequestBody OrganisationDto organisationDto){
         return organisationService.saveOrganisation(organisationDto);
@@ -100,4 +106,11 @@ public class OrganisationController {
     public List<OrganisationDto> getOrganisation(@PathVariable("keyword") String keyword){
         return organisationService.findAllBySearch(keyword);
 }
+
+    @PostMapping("/save-file")
+    public FileDto saveFile(@RequestParam MultipartFile file) throws IOException {
+        return fileService.store(file);
+    }
+
+
 }
