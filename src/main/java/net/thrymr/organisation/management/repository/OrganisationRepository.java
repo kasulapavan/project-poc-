@@ -12,7 +12,7 @@ public interface OrganisationRepository extends JpaRepository<Organisation, Long
     List<Organisation> findAllByOrderByOrganisationNameDesc();
 List<Organisation> findAllBySearchContainingIgnoreCase(String search);
 
-List<Organisation> findAllByOrderByOrganisationIdAndDepartmentListDepartmentIdAsc();
+//List<Organisation> findAllByOrderByOrganisationIdAndDepartmentListDepartmentIdAsc();
 
 
 }

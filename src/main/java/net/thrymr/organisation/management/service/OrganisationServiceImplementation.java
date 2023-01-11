@@ -3,8 +3,10 @@ package net.thrymr.organisation.management.service;
 import net.thrymr.organisation.management.dto.*;
 import net.thrymr.organisation.management.entity.Address;
 import net.thrymr.organisation.management.entity.Department;
+import net.thrymr.organisation.management.entity.FileUpload;
 import net.thrymr.organisation.management.entity.Organisation;
 import net.thrymr.organisation.management.repository.AddressRepository;
+import net.thrymr.organisation.management.repository.FileRepository;
 import net.thrymr.organisation.management.repository.OrganisationRepository;
 import net.thrymr.organisation.management.service.serviceInterface.OrganisationService;
 import org.modelmapper.ModelMapper;
@@ -28,6 +30,9 @@ public class OrganisationServiceImplementation implements OrganisationService {
     @Autowired
     public AddressRepository addressRepository;
 
+    @Autowired
+    public FileRepository fileRepository;
+
 
     @Autowired
     public ModelMapper modelMapper;
@@ -36,8 +41,9 @@ public class OrganisationServiceImplementation implements OrganisationService {
     public OrganisationDto saveOrganisation(OrganisationDto organisationDto) {
         Organisation organisation = modelMapper.map(organisationDto, Organisation.class);
         organisation.setSearch(organisation.getOrganisationId() + organisation.getOrganisationName() + organisation.getAboutCompany() + organisation.getContactNumber() + organisation.getDescription() + organisation.getEmail() + organisation.getAddress() + organisation.getDepartmentList());
+        Optional<FileUpload> fileUploadOptional = fileRepository.findById(organisationDto.getFileUpload().getId());
+            organisation.setFileUpload(fileUploadOptional.get());
         return modelMapper.map(organisationRepository.save(organisation), OrganisationDto.class);
-
     }
 
 
@@ -47,7 +53,6 @@ public class OrganisationServiceImplementation implements OrganisationService {
         return organisations.stream().map(organisation -> modelMapper.map(organisation, OrganisationDto.class)).toList();
 
     }
-
 
     @Override
     public List<OrganisationDto> findAllBySearch(String keyword) {
@@ -154,6 +159,19 @@ public class OrganisationServiceImplementation implements OrganisationService {
             address = organisationOptional.get().getAddress();
             return modelMapper.map(address, AddressDto.class);
         } else throw new MyCustomException("Organisation not found");
+    }
+
+    public FileDto sendFileByOrganisationId(Long id){
+        Optional<Organisation> organisationOptional = organisationRepository.findById(id);
+        FileUpload fileUpload = null;
+        if(organisationOptional.isPresent()) {
+            fileUpload = organisationOptional.get().getFileUpload();
+            if (fileUpload != null) {
+                return modelMapper.map(fileUpload, FileDto.class);
+            }
+            else throw new MyCustomException("No file by this Organisation");
+        }
+        else throw new MyCustomException("Organisation not found");
     }
 
 //Entity to Dto & Dto to Entity

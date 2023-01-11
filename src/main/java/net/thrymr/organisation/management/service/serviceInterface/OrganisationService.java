@@ -30,6 +30,8 @@ public interface OrganisationService {
 List<OrganisationDto> findAllOrganisationWithPagination(int offset, int pageSize);
 
     List<OrganisationDto> findAllBySearch(String search);
+    public FileDto sendFileByOrganisationId(Long id);
+
 
 
 }

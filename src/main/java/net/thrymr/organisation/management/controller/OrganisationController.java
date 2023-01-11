@@ -113,4 +113,11 @@ public class OrganisationController {
     }
 
 
+
+    @GetMapping("/send-file-org-by/{id}")
+    public FileDto sendFile(@PathVariable("id") Long id){
+        return organisationService.sendFileByOrganisationId(id);
+    }
+
+
 }

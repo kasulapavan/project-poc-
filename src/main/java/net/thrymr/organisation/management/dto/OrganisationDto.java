@@ -28,6 +28,7 @@ public class OrganisationDto {
 
     private AddressDto address;
     private List<DepartmentDto> departmentList;
+    private FileDto fileUpload;
 
 
 
