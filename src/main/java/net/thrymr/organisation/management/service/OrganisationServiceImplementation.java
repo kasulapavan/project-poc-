@@ -169,10 +169,11 @@ public class OrganisationServiceImplementation implements OrganisationService {
             if (fileUpload != null) {
                 return modelMapper.map(fileUpload, FileDto.class);
             }
-            else throw new MyCustomException("No file by this Organisation");
+            else throw new MyCustomException("No file on this organisation");
         }
         else throw new MyCustomException("Organisation not found");
     }
+
 
 //Entity to Dto & Dto to Entity
 
