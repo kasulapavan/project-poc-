@@ -3,6 +3,9 @@ package net.thrymr.organisation.management.service.serviceInterface;
 import net.thrymr.organisation.management.dto.*;
 import net.thrymr.organisation.management.service.OrderBy;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 public interface OrganisationService {
@@ -32,6 +35,6 @@ List<OrganisationDto> findAllOrganisationWithPagination(int offset, int pageSize
     List<OrganisationDto> findAllBySearch(String search);
     public FileDto sendFileByOrganisationId(Long id);
 
-
+    public BufferedImage sendFile(Long id) throws IOException;
 
 }

@@ -7,9 +7,12 @@ import net.thrymr.organisation.management.service.serviceInterface.DepartmentSer
 import net.thrymr.organisation.management.service.serviceInterface.FileService;
 import net.thrymr.organisation.management.service.serviceInterface.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -112,12 +115,14 @@ public class OrganisationController {
         return fileService.store(file);
     }
 
-
-
     @GetMapping("/send-file-org-by/{id}")
-    public FileDto sendFile(@PathVariable("id") Long id){
+    public FileDto sendFile(@PathVariable("id") Long id) throws IOException {
         return organisationService.sendFileByOrganisationId(id);
     }
 
+    @GetMapping("/get-organistion-image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id){
+        return fileService.getImage(id);
+    }
 
 }

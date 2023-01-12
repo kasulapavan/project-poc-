@@ -18,6 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +50,6 @@ public class OrganisationServiceImplementation implements OrganisationService {
         return modelMapper.map(organisationRepository.save(organisation), OrganisationDto.class);
     }
 
-
     @Override
     public List<OrganisationDto> findAllOrganisationWithPagination(int offset, int pageSize) {
         Page<Organisation> organisations = organisationRepository.findAll(PageRequest.of(offset, pageSize));
@@ -59,8 +62,6 @@ public class OrganisationServiceImplementation implements OrganisationService {
 
         List<Organisation> organisations = organisationRepository.findAllBySearchContainingIgnoreCase(keyword);
         return organisations.stream().map(organisation -> modelMapper.map(organisation, OrganisationDto.class)).toList();
-
-
     }
 
 
@@ -73,7 +74,6 @@ public class OrganisationServiceImplementation implements OrganisationService {
              exception.printStackTrace();
              return false;
          }
-    
      }
 
     @Override
@@ -174,6 +174,21 @@ public class OrganisationServiceImplementation implements OrganisationService {
         else throw new MyCustomException("Organisation not found");
     }
 
+    public BufferedImage sendFile(Long id) throws IOException {
+        Optional<Organisation> organisationOptional = organisationRepository.findById(id);
+        FileUpload fileUpload = null;
+        byte[] bytes = null;
+        if(organisationOptional.isPresent()) {
+            fileUpload = organisationOptional.get().getFileUpload();
+            if (fileUpload != null) {
+                bytes= fileUpload.getData();
+                return ImageIO.read(new ByteArrayInputStream(bytes));
+            }
+            else return null;
+        }
+        else return null;
+
+    }
 
 //Entity to Dto & Dto to Entity
 

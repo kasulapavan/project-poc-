@@ -13,13 +13,19 @@ public class FileDto {
     private  Long id;
     private String fileName;
 
+
     private String fileType;
+
+    String fileDownloadUri;
     @Lob
     private byte[] data;
 
-    public FileDto(String fileName, String fileType, byte[] data) {
+
+
+    public FileDto(String fileName, String fileType,String fileDownloadUri, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
+      this.fileDownloadUri=fileDownloadUri;
         this.data = data;
     }
 }
